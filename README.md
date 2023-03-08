@@ -10,20 +10,20 @@ from scipy.stats import shapiro, levene, ttest_ind, mannwhitneyu
 df = pd.read_csv('/kaggle/input/mobile-games-ab-testing/cookie_cats.csv')
 df.head()
 
-
+![Alt text](/AB Testing/dataframe.png)
 
 df.dtypes
 
-
+![Alt text](/AB Testing/datatypes.png)
 
 df.isna().sum()
 
-
+![Alt text](/AB Testing/dataframe_null_count.png)
 
 print(df['retention_1'].value_counts())
 print(df['retention_7'].value_counts())
 
-
+![Alt text](/AB Testing/dataframe_null_count.png)
 
 # Define the data
 retention_1 = df['retention_1'].value_counts()
@@ -46,7 +46,7 @@ ax.legend()
 # Display the chart
 plt.show()
 
-
+![Alt text](/AB Testing/retention_value_counts.png)
 
 # Create a boxplot
 fig, ax = plt.subplots()
@@ -60,7 +60,7 @@ ax.set_title('Boxplot of Data')
 # Display the chart
 plt.show()
 
-
+![Alt text](/AB Testing/sum_gamerounds_boxplot.png)
 
 median = df['sum_gamerounds'].median()
 q1, q3 = df['sum_gamerounds'].describe()[['25%', '75%']]
@@ -73,18 +73,13 @@ print('Quartile 3 value: ' + str(q3))
 print('Inter Quartile Range (IQR) value: ' + str(iqr))
 print('Outliers (Ascending): ' + str(np.sort(outliers)))
 
-
-
-# A/B Groups & Target Summary Stats
-df.groupby("version").sum_gamerounds.agg(["count", "median", "mean", "std", "max"])
-
-
+![Alt text](/AB Testing/sum_gamerounds_stats.png)
 
 df[(df.version == "gate_30")].reset_index().set_index("index").sum_gamerounds.plot(legend = True, label = "Gate 30", figsize = (20,5))
 df[df.version == "gate_40"].reset_index().set_index("index").sum_gamerounds.plot(legend = True, label = "Gate 40", alpha = 0.8)
 plt.suptitle("After Removing The Extreme Value", fontsize = 20);
 
-
+![Alt text](/AB Testing/sum_gamerounds_plot.png)
 
 def AB_Test(df, pthres=0.05):
     # H0:  There is no statistical difference between the gate_30 and the gate_40.
@@ -141,3 +136,4 @@ def AB_Test(df, pthres=0.05):
             f"p-value > {pthres} H0 Not Rejected, That is, there is no statistically significant difference between them. The difference is luck.")
 AB_Test(df,0.05)
 
+![Alt text](/AB Testing/sum_gamerounds_A_B_testing.png)
